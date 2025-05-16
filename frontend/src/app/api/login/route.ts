@@ -11,11 +11,14 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/local`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier, password }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/local`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, password }),
+      }
+    );
 
     const data = await res.json();
 
@@ -26,7 +29,17 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ jwt: data.jwt, user: data.user });
+    // return NextResponse.json({ jwt: data.jwt, user: data.user });
+    const response = NextResponse.json({ user: data.user });
+
+    // ✅ Set cookie token
+    response.cookies.set('token', data.jwt, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 60 * 60 * 24, // 1 ngày
+    });
+
+    return response;
   } catch (err) {
     return NextResponse.json({ error: 'Lỗi hệ thống' }, { status: 500 });
   }

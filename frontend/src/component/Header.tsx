@@ -137,12 +137,12 @@ const Header = () => {
               onMouseLeave={() => setShowUserMenu(false)}
             >
               <div className='flex items-center gap-2'>
-                <FaUser />
+                <FaUser size={30}/>
                 <span>{user.username}</span>
                 <IoIosArrowDown size={16} />
               </div>
               {showUserMenu && (
-                <div className='absolute left-0 top-full pt-2 z-10  w-40 bg-[#f7f7f7] border rounded-lg shadow-md text-black'>
+                <div className='absolute left-0 top-full pt-3 z-10  w-40 bg-[#f7f7f7] rounded-lg shadow-md text-black'>
                   <Link
                     href='/profile'
                     className='block px-4 py-2 hover:text-blue-500'

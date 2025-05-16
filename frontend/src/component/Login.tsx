@@ -34,8 +34,6 @@ export default function Login() {
         return;
       }
 
-      // Lưu token và user vào localStorage (hoặc cookie nếu muốn an toàn hơn)
-      localStorage.setItem('token', data.jwt);
       localStorage.setItem('user', JSON.stringify(data.user));
       useAuthStore.getState().setAuth(data.user, data.jwt);
       toast.success('Đăng nhập thành công!');
