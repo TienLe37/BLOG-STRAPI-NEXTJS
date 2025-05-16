@@ -3,6 +3,7 @@ import './globals.css';
 import { Roboto } from 'next/font/google';
 import Footer from '@/component/Footer';
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from '@/app/providers/AuthProvider';
 const roboto = Roboto({
   subsets: ['latin'],
   weight: ['400', '700'],
@@ -21,21 +22,23 @@ export default function RootLayout({
   return (
     <html lang='vi'>
       <body className='min-h-screen flex flex-col'>
-        <Header />
-        <main className='flex-1'>{children}</main>
-        <Footer />
-        <Toaster
-          position='top-right'
-          reverseOrder={false}
-          toastOptions={{
-            className: '',
-            duration: 2000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-          }}
-        />
+        <AuthProvider>
+          <Header />
+          <main className='flex-1'>{children}</main>
+          <Footer />
+          <Toaster
+            position='top-right'
+            reverseOrder={false}
+            toastOptions={{
+              className: '',
+              duration: 2000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
+        </AuthProvider>
       </body>
     </html>
   );

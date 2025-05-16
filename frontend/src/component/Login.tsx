@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthStore } from '@/store/authStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,7 +37,7 @@ export default function Login() {
       // Lưu token và user vào localStorage (hoặc cookie nếu muốn an toàn hơn)
       localStorage.setItem('token', data.jwt);
       localStorage.setItem('user', JSON.stringify(data.user));
-
+      useAuthStore.getState().setAuth(data.user, data.jwt);
       toast.success('Đăng nhập thành công!');
       router.push('/'); // Redirect về trang chủ hoặc trang cá nhân
     } catch (error) {
