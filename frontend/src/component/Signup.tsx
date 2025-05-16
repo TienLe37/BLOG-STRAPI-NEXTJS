@@ -15,7 +15,7 @@ export default function SignUp() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,7 +63,7 @@ export default function SignUp() {
               value={formData.username}
               onChange={handleChange}
               required
-            />
+            />  
             <input
               name='email'
               type='email'

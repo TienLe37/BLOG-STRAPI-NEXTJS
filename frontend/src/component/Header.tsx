@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import SubNav from './SubNav';
 
 const Header = () => {
+
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSubNav, setShowSubNav] = useState(false);

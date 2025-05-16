@@ -2,16 +2,47 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    identifier: '',
+    password: '',
+  });
 
-  const handleLogin = (e: React.FormEvent) => {
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
-    // Gọi API đăng nhập tại đây
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.error || 'Đăng nhập thất bại');
+        return;
+      }
+
+      // Lưu token và user vào localStorage (hoặc cookie nếu muốn an toàn hơn)
+      localStorage.setItem('token', data.jwt);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      toast.success('Đăng nhập thành công!');
+      router.push('/'); // Redirect về trang chủ hoặc trang cá nhân
+    } catch (error) {
+      toast.error('Lỗi hệ thống khi đăng nhập');
+      console.error(error);
+    }
   };
 
   return (
@@ -36,20 +67,22 @@ export default function Login() {
           </p>
 
           <form onSubmit={handleLogin} className='space-y-4'>
-            <input
-              type='email'
-              placeholder='Email'
-              className='w-full border px-4 py-2 rounded'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+           <input
+              name='identifier'
+              type='text'
+              placeholder='Email hoặc tên đăng nhập'
+              className='w-full px-4 py-3 border border-gray-300 rounded outline-none'
+              value={formData.identifier}
+              onChange={handleChange}
               required
             />
             <input
+              name='password'
               type='password'
               placeholder='Mật khẩu'
-              className='w-full border px-4 py-2 rounded'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              className='w-full px-4 py-3 border border-gray-300 rounded outline-none'
+              value={formData.password}
+              onChange={handleChange}
               required
             />
             <button
