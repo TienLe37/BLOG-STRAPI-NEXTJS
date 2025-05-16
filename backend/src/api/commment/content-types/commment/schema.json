@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commments",
+  "info": {
+    "singularName": "commment",
+    "pluralName": "commments",
+    "displayName": "Commment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "content": {
+      "type": "text"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "blog": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::blog.blog",
+      "inversedBy": "commments"
+    }
+  }
+}
