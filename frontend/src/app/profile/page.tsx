@@ -11,11 +11,11 @@ type Tab = "info" | "password" | "posts" | "create";
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("info");
   const user = useAuthStore((state) => state.user);
- 
+   
   return (
     <div className="max-w-screen-lg mx-auto min-h-screen mt-[100px] bg-gray-100 flex">
       {/* Sidebar */}
-      <aside className="w-72 bg-white shadow-lg p-6 flex flex-col items-center rounded-r-3xl">
+      <aside className="w-72 sticky bg-white shadow-lg p-6 flex flex-col items-center rounded-r-3xl">
         <img
           src="/avatar.jpg"
           alt="Avatar"
@@ -46,7 +46,7 @@ export default function ProfilePage() {
         <div className="bg-white p-6 rounded-2xl shadow-lg">
           {activeTab === "info" && <PersonalInfo  />}
           {activeTab === "password" && <ChangePassword />}
-          {activeTab === "posts" && user?.id !== undefined && <MyPosts userId={user.id} />}
+          {activeTab === "posts" && user && <MyPosts user={user} />}
           {activeTab === "create" && (
             <div className="text-gray-500">Chức năng tạo bài viết sẽ được cập nhật sau.</div>
           )}

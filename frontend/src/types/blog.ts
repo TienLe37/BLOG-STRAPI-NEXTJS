@@ -1,6 +1,6 @@
 export type BlogCardProps = {
   id: number;
-  documentId?: string;
+  documentId: string;
   title: string;
   date: string;
   imageUrl: string;
@@ -8,6 +8,9 @@ export type BlogCardProps = {
   author: {
     name: string;
   };
+  user: {
+    id: number;
+  }
   slug: string;
 }
 export type BlogDetailProps = {
@@ -22,3 +25,12 @@ export type BlogDetailProps = {
   };
   slug: string;
 }
+export type BlogProps = {
+  id: number;
+  documentId?: string;
+  title: string;
+  date: string;
+  imageUrl: string;
+  description: string
+}
+

@@ -31,12 +31,6 @@
     "description": {
       "type": "richtext"
     },
-    "author": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::author.author",
-      "inversedBy": "blogs"
-    },
     "slug": {
       "type": "string"
     },

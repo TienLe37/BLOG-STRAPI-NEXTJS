@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import Image from 'next/image';
 import toast from 'react-hot-toast';
 
 export default function PersonalInfo() {
