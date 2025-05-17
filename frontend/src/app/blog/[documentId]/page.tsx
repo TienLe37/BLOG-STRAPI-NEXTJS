@@ -4,7 +4,10 @@ import BlogDetail from "@/component/blogs/BlogDetail";
 import { getPost } from "@/lib/blogApi/api";
 import { notFound } from "next/navigation";
 
-export default async function BlogDetailPage({ params }: { params: { documentId: string } }) {
+interface Props {
+  params: { documentId: string };
+}
+export default async function BlogDetailPage({ params }: Props)  {
   const post = await getPost(params.documentId);
   if (!post) return notFound();
 

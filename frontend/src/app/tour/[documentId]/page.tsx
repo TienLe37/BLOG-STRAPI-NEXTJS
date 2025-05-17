@@ -1,19 +1,16 @@
-import TourDetail from "@/component/tours/TourDetail";
-import { getTour } from "@/lib/tourApi/api";
-import { notFound } from "next/navigation";
+import TourDetail from '@/component/tours/TourDetail';
+import { getTour } from '@/lib/tourApi/api';
+import { notFound } from 'next/navigation';
 
-
-export default async function TourDetailPage({
-  params,
-}: {
+interface Props {
   params: { documentId: string };
-}) {
+}
+export default async function TourDetailPage({ params }: Props) {
   const tour = await getTour(params.documentId);
-  console.log(tour);
   if (!tour) return notFound();
 
   return (
-    <div className="container mt-[90px]">
+    <div className='container mt-[90px]'>
       <TourDetail tour={tour} />
     </div>
   );

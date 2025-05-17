@@ -120,3 +120,9 @@ export const newsList = [
       locale: 'vi',     // hỗ trợ tiếng Việt tốt hơn
     });
   };
+ export const menuProfiles = [
+    { key: "info", label: "👤 Thông tin cá nhân" },
+    { key: "password", label: "🔒 Đổi mật khẩu" },
+    { key: "posts", label: "📝 Bài viết đã đăng" },
+    { key: "create", label: "➕ Tạo bài viết" },
+  ];

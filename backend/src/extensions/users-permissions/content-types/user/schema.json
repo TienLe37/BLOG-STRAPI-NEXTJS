@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -24,6 +24,17 @@
       "minLength": 6,
       "configurable": false,
       "required": true
+    },
+     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
     },
     "provider": {
       "type": "string",
@@ -64,6 +75,12 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
+    },
+    "blogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::blog.blog",
+      "mappedBy": "user"
     }
   }
 }
