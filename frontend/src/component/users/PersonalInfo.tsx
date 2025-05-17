@@ -91,7 +91,7 @@ export default function PersonalInfo() {
       <h2 className='text-xl font-bold mb-4'>Thông tin cá nhân</h2>
 
       <form onSubmit={handleSubmit} className='space-y-4'>
-        <div className='flex items-center gap-4 mb-6'>
+        {/* <div className='flex items-center gap-4 mb-6'>
           <div className='relative w-24 h-24 rounded-full overflow-hidden'>
             <Image src={avatarUrl} alt='avatar' layout='fill' objectFit='cover' />
           </div>
@@ -106,7 +106,7 @@ export default function PersonalInfo() {
               />
             </div>
           )}
-        </div>
+        </div> */}  
 
         <div>
           <label className='block font-medium'>Họ và tên:</label>

@@ -1,51 +1,98 @@
-import { useState } from "react";
+'use client';
+
+import { useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
+import toast from 'react-hot-toast';
 
 export default function ChangePassword() {
-  const [oldPass, setOldPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const { token } = useAuthStore();
 
-  const handleChange = () => {
-    if (newPass !== confirmPass) {
-      alert("Mật khẩu xác nhận không khớp");
+  const [form, setForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (form.newPassword !== form.confirmPassword) {
+      toast.error('Mật khẩu xác nhận không khớp');
       return;
     }
 
-    alert("Yêu cầu đổi mật khẩu đã được gửi!");
-  };
+    setLoading(true);
+    try {
+      const res = await fetch('/api/user/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, token }),
+      });
 
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Thay đổi mật khẩu thất bại');
+
+      toast.success('Đổi mật khẩu thành công');
+      setForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (err: any) {
+      toast.error(err.message || 'Có lỗi xảy ra');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <div>
-      <h3 className="text-2xl font-bold mb-6">Đổi mật khẩu</h3>
-      <div className="space-y-4 max-w-md">
+    <form onSubmit={handleSubmit} className='max-w-md mx-auto space-y-4 p-4 bg-white rounded shadow'>
+      <h2 className='text-lg font-semibold'>Đổi mật khẩu</h2>
+
+      <div>
+        <label className='block mb-1'>Mật khẩu hiện tại</label>
         <input
-          type="password"
-          placeholder="🔑 Mật khẩu cũ"
-          value={oldPass}
-          onChange={(e) => setOldPass(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          type='password'
+          name='currentPassword'
+          value={form.currentPassword}
+          onChange={handleChange}
+          required
+          className='w-full border rounded px-3 py-2'
         />
-        <input
-          type="password"
-          placeholder="🔐 Mật khẩu mới"
-          value={newPass}
-          onChange={(e) => setNewPass(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-        />
-        <input
-          type="password"
-          placeholder="✅ Xác nhận mật khẩu"
-          value={confirmPass}
-          onChange={(e) => setConfirmPass(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-        />
-        <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow"
-          onClick={handleChange}
-        >
-          Xác nhận
-        </button>
       </div>
-    </div>
+
+      <div>
+        <label className='block mb-1'>Mật khẩu mới</label>
+        <input
+          type='password'
+          name='newPassword'
+          value={form.newPassword}
+          onChange={handleChange}
+          required
+          className='w-full border rounded px-3 py-2'
+        />
+      </div>
+
+      <div>
+        <label className='block mb-1'>Xác nhận mật khẩu mới</label>
+        <input
+          type='password'
+          name='confirmPassword'
+          value={form.confirmPassword}
+          onChange={handleChange}
+          required
+          className='w-full border rounded px-3 py-2'
+        />
+      </div>
+
+      <button
+        type='submit'
+        disabled={loading}
+        className='bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50'
+      >
+        {loading ? 'Đang xử lý...' : 'Lưu thay đổi'}
+      </button>
+    </form>
   );
 }
