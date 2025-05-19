@@ -5,8 +5,8 @@ import MyPosts from "@/component/users/MyPosts";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { menuProfiles } from "@/utils/constants";
+import { Tab } from "@/types";
 
-type Tab = "info" | "password" | "posts" | "create";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("info");
