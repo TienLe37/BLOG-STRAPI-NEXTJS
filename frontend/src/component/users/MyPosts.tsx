@@ -90,7 +90,6 @@ export default function MyPosts({ user }: User) {
         if (imageFile) {
           formData.append('files.image', imageFile);
         }
-        console.log(formData);
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${blog.documentId}`,
           {

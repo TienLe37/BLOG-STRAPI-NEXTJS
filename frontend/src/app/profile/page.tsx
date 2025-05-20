@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { menuProfiles } from "@/utils/constants";
 import { Tab } from "@/types";
+import CreatePost from "@/component/users/CreatePost";
 
 
 export default function ProfilePage() {
@@ -42,14 +43,15 @@ export default function ProfilePage() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-10">
+      <main className="flex-1 p-10 ">
         <div className="bg-white p-6 rounded-2xl shadow-lg">
           {activeTab === "info" && <PersonalInfo  />}
           {activeTab === "password" && <ChangePassword />}
           {activeTab === "posts" && user && <MyPosts user={user} />}
-          {activeTab === "create" && (
+          {/* {activeTab === "create" && (
             <div className="text-gray-500">Chức năng tạo bài viết sẽ được cập nhật sau.</div>
-          )}
+          )} */}
+          {activeTab === "create" && user?.id !== undefined && <CreatePost userId={user.id} />}
         </div>
       </main>
     </div>
